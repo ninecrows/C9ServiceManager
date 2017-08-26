@@ -31,8 +31,12 @@ namespace C9ServiceManagerService
 
             try
             {
-                using (RegistryKey key = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\" +
-                    "ServiceManagerService",
+                EventLog.WriteEntry($"Reading configuration for {this.ServiceName}");
+
+                string keyPath = "SYSTEM\\CurrentControlSet\\Services\\" + ServiceName;
+
+                // Get our service key so that we can retrieve configuration information stored beneath it.
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(keyPath,
                     RegistryKeyPermissionCheck.ReadWriteSubTree,
                     System.Security.AccessControl.RegistryRights.FullControl))
                 {
@@ -62,6 +66,17 @@ namespace C9ServiceManagerService
             {
                 EventLog.WriteEntry($"Failed to read registry {e}");
             }
+
+            ServiceController[] services = ServiceController.GetServices();
+            EventLog.WriteEntry($"Found {services.Length} services");
+
+            string results = "";
+            foreach (ServiceController service in services)
+            {
+                results += service.DisplayName + " " + service.ServiceName + "\n";
+            }
+
+            EventLog.WriteEntry(results);
 
             // Set the run rate and handler.
             timer.Interval = runRate;

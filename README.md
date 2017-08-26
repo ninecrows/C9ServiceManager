@@ -29,6 +29,18 @@ class to see what is there. If that isn't workable I'll look at using
 the generic Registry class to read and enumerate settings as
 appropriate.
 
+The service now successfully reads the list of services in the system
+and has the potential to also check and modify service status. Needs
+to properly dispose of those ServiceController objects (should
+probably encapsulate the function as I don't really need 'live'
+objects here). Should also wrap the registry access in something that
+provides a more 'civilized' view with back-end abstraction to
+arbitrary persistence stores. Work to be done.
+
+Need to add in the list of services that should be monitored and then
+time interval support to allow services to be started and stopped at
+appropriate times.
+
 -----
 
 2017-Aug-25
