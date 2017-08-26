@@ -19,10 +19,12 @@ namespace C9ServiceManagerService
 
         protected override void OnStart(string[] args)
         {
+            EventLog.WriteEntry("Service Manager Service Starting Up...");
         }
 
         protected override void OnStop()
         {
+            EventLog.WriteEntry("Service Manager Service Stopping...");
         }
     }
 }
