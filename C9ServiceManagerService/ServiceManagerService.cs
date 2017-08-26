@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace C9ServiceManagerService
 {
-    public partial class Service1 : ServiceBase
+    public partial class ServiceManagerService : ServiceBase
     {
-        public Service1()
+        public ServiceManagerService()
         {
             InitializeComponent();
         }
