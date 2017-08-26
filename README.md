@@ -20,6 +20,15 @@ Need to move on to event logging and creating an MSI installer to put
 the service in place on non-dev systems. Need to consider Wix or the
 free installshield version.
 
+Now running the timer tick reliably. Manual install and uninstall with
+events is all up and running.
+
+Next moving on to reading settings from the registry...ideally from
+the services key that the service owns. Looking in the ServiceBase
+class to see what is there. If that isn't workable I'll look at using
+the generic Registry class to read and enumerate settings as
+appropriate.
+
 -----
 
 2017-Aug-25
