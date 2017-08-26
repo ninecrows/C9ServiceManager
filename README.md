@@ -12,6 +12,16 @@ allows external programmatic control.
 
 -----
 
+2017-Aug-26
+
+Added installer classes and renamed service class.
+
+Need to move on to event logging and creating an MSI installer to put
+the service in place on non-dev systems. Need to consider Wix or the
+free installshield version.
+
+-----
+
 2017-Aug-25
 
 Starting with the basic service definition and installer pieces.
