@@ -7,6 +7,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace C9ServiceManagerService
 {
@@ -27,6 +28,40 @@ namespace C9ServiceManagerService
         protected override void OnStart(string[] args)
         {
             EventLog.WriteEntry("Service Manager Service Starting Up...");
+
+            try
+            {
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\" +
+                    "ServiceManagerService",
+                    RegistryKeyPermissionCheck.ReadWriteSubTree,
+                    System.Security.AccessControl.RegistryRights.FullControl))
+                {
+                    if (key != null)
+                    {
+                        EventLog.WriteEntry("Opened service key");
+
+                        Object o = key.GetValue("PollingInterval");
+                        if (o == null)
+                        {
+                            EventLog.WriteEntry("Rate not set, defaulting");
+                            key.SetValue("PollingInterval", runRate);
+                        }
+                        else
+                        {
+                            int value = (o as int?) ?? 20000;
+                            EventLog.WriteEntry($"Set rate to {value}");
+                        }
+                    }
+                    else
+                    {
+                        EventLog.WriteEntry("Failed to open service key");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                EventLog.WriteEntry($"Failed to read registry {e}");
+            }
 
             // Set the run rate and handler.
             timer.Interval = runRate;
