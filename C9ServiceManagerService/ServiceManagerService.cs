@@ -17,6 +17,8 @@ namespace C9ServiceManagerService
         /// </summary>
         private int runRate = 20000;
 
+        System.Timers.Timer timer = new System.Timers.Timer();
+
         public ServiceManagerService()
         {
             InitializeComponent();
@@ -26,16 +28,22 @@ namespace C9ServiceManagerService
         {
             EventLog.WriteEntry("Service Manager Service Starting Up...");
 
-            System.Timers.Timer timer = new System.Timers.Timer();
+            // Set the run rate and handler.
             timer.Interval = runRate;
+            timer.AutoReset = true;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
+            timer.Start();
 
-            EventLog.WriteEntry($"Timer intialized at {runRate / 1000} Seconds");
+            EventLog.WriteEntry($"Timer intialized at {runRate / 1000.0} Seconds");
         }
 
         protected override void OnStop()
         {
             EventLog.WriteEntry("Service Manager Service Stopping...");
+
+            timer.Stop();
+            //timer.Close();
+            timer.Dispose();
         }
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
