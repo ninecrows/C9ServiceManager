@@ -41,6 +41,12 @@ Need to add in the list of services that should be monitored and then
 time interval support to allow services to be started and stopped at
 appropriate times.
 
+Looking at the possibility of splitting off the helper code into a
+separate assembly.
+
+Need to figure out some option for packing the service parts and
+registration/deregistration into an MSI for ease of use.
+
 -----
 
 2017-Aug-25
