@@ -16,7 +16,7 @@ allows external programmatic control.
 
 <hr>
 
-###2017-Aug-27
+<h3>2017-Aug-27</h3>
 
 Added registry key enumeration for list of services to be probed.
 
@@ -55,9 +55,9 @@ as I've been reading that .NET core and Win32 don't necessarily
 coexist peacefully...though OWIN and NancyFX based versions may be
 easier to slot in than .NET core in this case.
 
------
+<hr>
 
-###2017-Aug-26
+<h3>2017-Aug-26</h3>
 
 Added installer classes and renamed service class.
 
@@ -92,9 +92,9 @@ separate assembly.
 Need to figure out some option for packing the service parts and
 registration/deregistration into an MSI for ease of use.
 
------
+<hr>
 
-###2017-Aug-25
+<h3>2017-Aug-25</h3>
 
 Starting with the basic service definition and installer pieces.
 
