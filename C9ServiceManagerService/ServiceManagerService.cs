@@ -18,6 +18,12 @@ namespace C9ServiceManagerService
         /// </summary>
         private int runRate = 20000;
 
+        // Versioon display on startup...there must be a better way to handle this, but I'm not going looking at the moment.
+        private int version = 0;
+        private int minorVersion = 1;
+        private int build = 5;
+
+        // Store the timer that we use for our wake-ups.
         System.Timers.Timer timer = new System.Timers.Timer();
 
         public ServiceManagerService()
@@ -27,8 +33,9 @@ namespace C9ServiceManagerService
 
         protected override void OnStart(string[] args)
         {
-            EventLog.WriteEntry("Service Manager Service Starting Up...");
+            EventLog.WriteEntry($"Service Manager Service Starting Up @ {version}.{minorVersion}.{build}");
 
+            // Fetch configuration information from the registry. This should be factored but at the moment I've got other fish to fry.
             try
             {
                 EventLog.WriteEntry($"Reading configuration for {this.ServiceName}");
@@ -60,6 +67,57 @@ namespace C9ServiceManagerService
                     {
                         EventLog.WriteEntry("Failed to open service key");
                     }
+
+                    // Look for the services key and if it is present we'll enumerate the subkeys. Each subkey corresponds to a service that is to be monitored or managed.
+                    using (RegistryKey servicesKey = key.OpenSubKey("Services"))
+                    {
+                        if (servicesKey != null)
+                        {
+                            string[] targets = servicesKey.GetSubKeyNames();
+
+                            string logme = "";
+                            foreach (string target in targets)
+                            {
+                                string serviceState = "Does not exist";
+                                try
+                                {
+                                   using (ServiceController thisService = new ServiceController(target))
+                                    {
+                                        if (thisService != null)
+                                        {
+                                            // Yes, ToString handles running as well, but in the longer term I expect Running to be a particularly notable state.
+                                            if (thisService.Status == ServiceControllerStatus.Running)
+                                            {
+                                                serviceState = ">Running<";
+                                            }
+                                            else
+                                            {
+                                                serviceState = thisService.Status.ToString();
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // Actually handled by the default string for the moment.
+                                        }
+                                    }
+                                }
+
+                                // In this case we really don't want to do anything if this fails...its just a state probe. 
+                                catch (Exception e)
+                                {
+                                    serviceState = "error probing";
+                                }
+
+                                    logme += $"{target}: {serviceState}\n";
+                            }
+
+                            EventLog.WriteEntry($"Probe Services\n{logme}");
+                        }
+                        else
+                        {
+                            EventLog.WriteEntry("No Services key found.");
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -73,7 +131,7 @@ namespace C9ServiceManagerService
             string results = "";
             foreach (ServiceController service in services)
             {
-                results += service.DisplayName + " " + service.ServiceName + "\n";
+                results += $"[{service.ServiceName}] -> \"{service.DisplayName}\"\n";
             }
 
             EventLog.WriteEntry(results);
