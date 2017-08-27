@@ -14,9 +14,9 @@ I expect that in the final implementation it will expose a web UI for
 checking and modifying configuration and a RESTful interface that
 allows external programmatic control.
 
------
+<hr>
 
-2017-Aug-27
+###2017-Aug-27
 
 Added registry key enumeration for list of services to be probed.
 
@@ -34,13 +34,10 @@ external RESTful interfaces to control and monitor the service and
 
 I expect to put the main operational guts in place today.
 
-o Run and monitor service status changes logging them.
-o Read suppression time ranges and stop selected services during their
-  'off' times.
-o Probably include an 'always off' option to suppress given services
-  until told to stop.
-o If we've stopped a service, restore it to its previous state (stored
-  in memory) when its passes outside of its suppress interval.
+- Run and monitor service status changes logging them.
+- Read suppression time ranges and stop selected services during their 'off' times.
+- Probably include an 'always off' option to suppress given services until told to stop.
+- If we've stopped a service, restore it to its previous state (stored in memory) when its passes outside of its suppress interval.
 
 After that code is in place and working I'll move on to trying to
 build an installer using Wix to simplify the process of getting this
@@ -60,7 +57,7 @@ easier to slot in than .NET core in this case.
 
 -----
 
-2017-Aug-26
+###2017-Aug-26
 
 Added installer classes and renamed service class.
 
@@ -97,7 +94,7 @@ registration/deregistration into an MSI for ease of use.
 
 -----
 
-2017-Aug-25
+###2017-Aug-25
 
 Starting with the basic service definition and installer pieces.
 
