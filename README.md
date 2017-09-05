@@ -16,6 +16,40 @@ allows external programmatic control.
 
 <hr>
 
+<h3>2017-Sep-05</h3>
+
+Pushing in updates from over the weekend. The new code compiles but is
+incomplete at this point. I'll finish factoring the configuration code
+into the new assembly shortly and then add the rest of the
+configuration information needed. Likely I'll switch all of the time
+related bits over to <code>TimeSpan</code> and store these as strings
+rather than integers. 
+
+I expect to have the factored objects store 'events' internally and
+then have the main service push them into the even log later. This
+keeps some of the service specific code out of the helpers and
+generalizes things a bit. 
+
+I am trying to figure out how best to handle unit test and dependency
+injection in some cases. The configuration object could have registry
+code injected to facilitate but that would seem to add a lot of work
+to enable control of the back end. Still chewing on that one.
+
+<h3>2017-Sep-04</h3>
+
+Pulling out the Win32 specific items into a separate assembly to
+facilitate testing and perhaps some isolation between the main service
+and the registry and SCM interactions.
+
+Figuring this might help when the web UI and RESTful control
+interfaces get added. Still not sure how to properly secure the web
+interfaces...really want TLS without self signed certificate
+hassles. Once I get there I guess I'll see.
+
+Once this is done I should be in good shape to build the main body of
+the service that checks periodically for service state changes and
+make necessary adjustments to service state.
+
 <h3>2017-Aug-27</h3>
 
 Added registry key enumeration for list of services to be probed.

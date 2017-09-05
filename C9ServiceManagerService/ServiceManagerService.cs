@@ -18,7 +18,8 @@ namespace C9ServiceManagerService
         /// </summary>
         private int runRate = 20000;
 
-        // Versioon display on startup...there must be a better way to handle this, but I'm not going looking at the moment.
+        // Version display on startup...there must be a better way to
+        // handle this, but I'm not going looking at the moment. 
         private int version = 0;
         private int minorVersion = 1;
         private int build = 5;
@@ -105,7 +106,7 @@ namespace C9ServiceManagerService
                                 // In this case we really don't want to do anything if this fails...its just a state probe. 
                                 catch (Exception e)
                                 {
-                                    serviceState = "error probing";
+                                    serviceState = "error probing " + e.ToString();
                                 }
 
                                     logme += $"{target}: {serviceState}\n";

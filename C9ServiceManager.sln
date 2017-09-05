@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C9ServiceManagerService", "C9ServiceManagerService\C9ServiceManagerService.csproj", "{DA554D75-FB3C-4E51-9E6D-896D48F301E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C9ServiceManagerSupport", "C9ServiceManagerSupport\C9ServiceManagerSupport.csproj", "{3C90569B-7692-4534-A207-4B0CEB9C04A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DA554D75-FB3C-4E51-9E6D-896D48F301E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA554D75-FB3C-4E51-9E6D-896D48F301E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA554D75-FB3C-4E51-9E6D-896D48F301E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C90569B-7692-4534-A207-4B0CEB9C04A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C90569B-7692-4534-A207-4B0CEB9C04A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C90569B-7692-4534-A207-4B0CEB9C04A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C90569B-7692-4534-A207-4B0CEB9C04A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
