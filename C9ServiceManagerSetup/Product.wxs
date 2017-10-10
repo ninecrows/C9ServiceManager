@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The name of the product -->
+<?define Name = "C9ServiceManagerService" ?>
+<!-- The manufacturer, for setup package publisher and folder info -->
+<?define Manufacturer = "NineCrows.com" ?>
+<!-- The version number of this setup package-->
+<?define Version = "1.0.1" ?>
+<!-- UpgradeCode must be unique and not changed once the first version of the program is installed. -->
+<?define UpgradeCode = "{C4DE7AEF-BD3D-4DDA-8B68-2BDA119019C0}" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           Name="$(var.Name)" 
+           Manufacturer="$(var.Manufacturer)" 
+           UpgradeCode="$(var.UpgradeCode)" 
+           Version="$(var.Version)" 
+           Language="1033">
+
+    <!-- Create a folder inside Sandbox Projects called C9ServiceManagerService -->
+    <Package InstallerVersion="300" Compressed="yes"/>
+    <!-- Create a folder inside Sandbox Projects called T6Service -->
+    <Media Id="1" Cabinet="C9ServiceManager.cab" EmbedCab="yes" />
+    <!-- Allow upgrades and prevent downgrades -->
+    <MajorUpgrade DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
+
+    <!-- Define the directory structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <!-- Create a folder inside program files called Sandbox Projects -->
+        <Directory Id="ROOTDIRECTORY" Name="$(var.Manufacturer)">
+          <!-- Create a folder inside Sandbox Projects called  C9ServiceManagerService -->
+          <Directory Id="INSTALLFOLDER" Name="$(var.Name)" />
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- The files inside this DirectoryRef are linked to the Sandbox Projects directory via INSTALLFOLDER -->
+    <DirectoryRef Id="INSTALLFOLDER">
+      <!-- Create a component which is the C9ServiceManagerService.exe file -->
+
+      <Component Id="C9ServiceManagerService">
+        <!-- Copies the T6Service.exe file using the project reference preprocessor variables -->
+        <File 
+          Id="FILE_C9ServiceManagerService" 
+          Source="$(var.C9ServiceManagerService.TargetPath)" 
+          KeyPath="yes" />
+        <!-- Remove all files from the INSTALLFOLDER on uninstall -->
+        <RemoveFile Id="ALLFILES" Name="*.*" On="both" />
+        <!-- Tell WiX to install the Service -->
+        <ServiceInstall Id="ServiceInstaller"
+        Type="ownProcess"
+        Name="C9ServiceManagerService"
+        DisplayName="$(var.Name)"
+        Description="A Test Service that logs selected service state and controls service activity based on time of day."
+        Start="auto"
+        ErrorControl="normal" />
+        <!-- Tell WiX to start the Service -->
+        <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="C9ServiceManagerService" Wait="yes" />
+      </Component>
+
+      <Component Id="C9ServiceManagerSupport">
+        <!-- Copies the T6Service.exe file using the project reference preprocessor variables -->
+        <File 
+          Id="FILE_C9ServiceManagerSupport" 
+          Source="$(var.C9ServiceManagerSupport.TargetPath)" 
+          KeyPath="yes" />
+        <!-- Remove all files from the INSTALLFOLDER on uninstall -->
+        <RemoveFile Id="ALLFILES_Support" Name="*.*" On="both" />
+      </Component>
+
+    </DirectoryRef>
+ 
+      
+ <!-- Tell WiX to install the files -->
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <ComponentRef Id="C9ServiceManagerService" />
+     <ComponentRef Id="C9ServiceManagerSupport"/>
+  </Feature>
+  </Product>
+</Wix>

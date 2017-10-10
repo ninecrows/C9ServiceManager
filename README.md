@@ -16,6 +16,34 @@ allows external programmatic control.
 
 <hr>
 
+<h3>2017-Oct-10</h3>
+
+I put the installer pieces in place and fixed up my local install of
+Wix so everything works. 
+
+Found out that the Wix project needs to have references to the other
+projects it will generate vars from. Once that was in place and a
+couple of minor typos were fixed, the installer works as expected.
+
+I still have to generate the 'guts' of the service code. I'll probably
+also try to build up a few unit tests. Limited what I can do with this
+small service as most things touch system APIs and I'm not inclined to
+create interfaces to components to do simple work like manipulating
+registry keys.
+
+I did find that all I seem to need to make NUnit work properly are the
+NUnit and NUnit test runner components. The Microsoft test related
+piece doesn't seem to be necessary.
+
+<h3>2017-Oct-08</h3>
+
+Getting back to this project. I've run through a sample service in Wix
+and I think I've got that process in hand. Now I need to add the
+'guts' into this one to manage and monitor service state as intended.
+
+Once those pieces are in place I'll look at exposing web methods/web
+UI to control the thing.
+
 <h3>2017-Sep-05</h3>
 
 Pushing in updates from over the weekend. The new code compiles but is

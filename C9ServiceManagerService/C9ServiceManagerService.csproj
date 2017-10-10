@@ -70,5 +70,11 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C9ServiceManagerSupport\C9ServiceManagerSupport.csproj">
+      <Project>{3c90569b-7692-4534-a207-4b0ceb9c04a6}</Project>
+      <Name>C9ServiceManagerSupport</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
